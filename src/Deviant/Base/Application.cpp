@@ -130,12 +130,28 @@ bool Application::Initialize(std::string header, unsigned int width, unsigned in
 
 /*-----------------------------------------------------------------*/
 int Application::Run() {
+    Debug::out("Beginning run of " + _header + ".", ANSI_COLOR_CYAN);
     _running = true;
     SDL_Event e;
 
     while (_running) {
         while (SDL_PollEvent(&e) != 0) {
-            if (e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE) {
+            if (e.type == SDL_WINDOWEVENT && _verbosity >= VERBOSITY_LOG) {
+                switch(e.window.event) {
+                case SDL_WINDOWEVENT_MOVED:
+                    Debug::out("Window " + std::to_string(e.window.windowID) + " moved to " + std::to_string(e.window.data1) + ", " + std::to_string(e.window.data2) + ".");
+                    break;
+                case SDL_WINDOWEVENT_FOCUS_GAINED:
+                    Debug::out("Window " + std::to_string(e.window.windowID) + " focus gained.");
+                    break;
+                case SDL_WINDOWEVENT_FOCUS_LOST:
+                    Debug::out("Window " + std::to_string(e.window.windowID) + " focus lost.");
+                    break;
+                case SDL_WINDOWEVENT_CLOSE:
+                    Debug::out("Window " + std::to_string(e.window.windowID) + " closed.");
+                    break;
+                }
+            } else if (e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE) {
                 _running = false;
                 break;
             } else if (e.key.keysym.sym == SDLK_F5) {
@@ -210,7 +226,7 @@ SDL_Renderer* Application::GetRenderer() {
 
 /*-----------------------------------------------------------------*/
 void Application::renderStart() {
-    SDL_SetRenderDrawColor(_renderer, 0x0, 0x0, 0x0, 0xFF);
+    SDL_SetRenderDrawColor(_renderer, 0x45, 0x45, 0x45, 0xFF);
     SDL_RenderClear(_renderer);
 }
 
