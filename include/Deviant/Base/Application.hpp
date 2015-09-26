@@ -1,5 +1,5 @@
 /*
-    Deviant - SFML Game Library
+    Deviant - SDL Game Library
     Copyright (C) 2015 Jack Riales (jack@thatnaughtypanda.com)
 
     This software is provided 'as-is', without any express or implied warranty.
@@ -30,8 +30,20 @@
 #ifndef DVNT_APPLICATION_HPP
 #define DVNT_APPLICATION_HPP
 
+// Inclusions
 #include <string>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
+
+// Log verbosity constants
+#define VERBOSITY_NONE 0
+#define VERBOSITY_LIMITED 1
+#define VERBOSITY_ERROR 2
+#define VERBOSITY_WARN 3
+#define VERBOSITY_LOG 4
+#define VERBOSITY_ALL 5
 
 namespace dv {
 
@@ -50,7 +62,10 @@ class Application {
             \return TRUE if initialized correctly, FALSE if not.
             \throw SDL initialization messages.
         */
-        static bool Initialize(std::string header, unsigned int width, unsigned int height);
+        static bool Initialize(std::string header = "Deviant Application",
+                               unsigned int width = 800, unsigned int height = 600,
+                               unsigned int defaultWidth = 600, unsigned int defaultHeight = 600,
+                               unsigned int framerate = 60, int verbosity = VERBOSITY_LIMITED);
 
         /**
             \brief Application run method.
@@ -133,6 +148,10 @@ class Application {
         static std::string          _header;
         static unsigned int         _width;
         static unsigned int         _height;
+        static unsigned int         _defaultWidth;
+        static unsigned int         _defaultHeight;
+        static float                _widthRatio;
+        static float                _heightRatio;
         static unsigned int         _framerate;
         static bool                 _running;
         static int                  _verbosity;

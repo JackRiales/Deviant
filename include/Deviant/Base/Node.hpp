@@ -1,5 +1,5 @@
 /*
-    Deviant - SFML Game Library
+    Deviant - SDL Game Library
     Copyright (C) 2015 Jack Riales (jack@thatnaughtypanda.com)
 
     This software is provided 'as-is', without any express or implied warranty.
@@ -32,17 +32,14 @@
 
 namespace dv {
 
-class RenderNode : public sf::Drawable, sf::Transformable {
+class RenderNode {
     public:
         RenderNode();
         virtual ~RenderNode() = 0;
 
-    protected:
-        virtual void draw(RenderTarget &target, RenderStates states) const;
-
     private:
-        sf::VertexArray _poly;
-        sf::Texture     _texture;
+        int             _id;
+        std::string     _name;
         unsigned int    _drawLayer;
 };
 

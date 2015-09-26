@@ -1,5 +1,5 @@
 /*
-    Deviant - SFML Game Library
+    Deviant - SDL Game Library
     Copyright (C) 2015 Jack Riales (jack@thatnaughtypanda.com)
 
     This software is provided 'as-is', without any express or implied warranty.
@@ -30,37 +30,152 @@ using namespace dv;
 std::string     Application::_header;
 unsigned int    Application::_width;
 unsigned int    Application::_height;
+unsigned int    Application::_defaultWidth;
+unsigned int    Application::_defaultHeight;
+float           Application::_widthRatio;
+float           Application::_heightRatio;
 unsigned int    Application::_framerate;
 bool            Application::_running;
+int             Application::_verbosity;
 SDL_Window*     Application::_window    = NULL;
 SDL_Renderer*   Application::_renderer  = NULL;
 
 /*-----------------------------------------------------------------*/
-bool Application::Initialize(std::string header, unsigned int width, unsigned int height) {
-    Debug::out("Initializing Deviant. Please wait for awesome things to happen.\n", ANSI_COLOR_CYAN);
+bool Application::Initialize(std::string header, unsigned int width, unsigned int height, unsigned int defaultWidth, unsigned int defaultHeight, unsigned int framerate, int verbosity) {
+    Debug::out("Initializing Deviant. Please wait for awesome things to happen.", ANSI_COLOR_CYAN);
     _header = header;
     _width = width;
-    _header = height;
+    _height = height;
+    _defaultWidth = defaultWidth;
+    _defaultHeight = defaultHeight;
+    _framerate = framerate;
+    _verbosity = verbosity;
+
+    // Initialize SDL
+    if (_verbosity >= VERBOSITY_LOG) Debug::out("Initializing SDL state...");
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+        std::string errString = "Application::Initialize failed to initialize SDL modules.";
+        if (_verbosity >= VERBOSITY_LIMITED) Debug::err(errString, SDL_GetError());
+        return false;
+    }
+
+    // Set render scale quality to '1'
+    if (_verbosity >= VERBOSITY_LOG) Debug::out("Hinting render scale quality...");
+    if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
+        std::string warnString = "Application::Initialize couldn't set render scale quality.";
+        if (_verbosity >= VERBOSITY_LIMITED) Debug::warn(warnString);
+        throw warnString;
+    }
+
+    // Create a window
+    if (_verbosity >= VERBOSITY_LOG) Debug::out("Creating window...");
+    _window = SDL_CreateWindow(_header.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+                               _width, _height, SDL_WINDOW_SHOWN);
+    if (_window == NULL) {
+        std::string errString = "Application::Initialize failed to generate a window.";
+        if (_verbosity >= VERBOSITY_LIMITED) Debug::err(errString, SDL_GetError());
+        return false;
+    }
+
+    // Create the renderer
+    if (_verbosity >= VERBOSITY_LOG) Debug::out("Creating renderer...");
+    _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
+    if (_renderer == NULL) {
+        std::string errString = "Application::Initialize failed to generate the renderer.";
+        if (_verbosity >= VERBOSITY_LIMITED) Debug::err(errString, SDL_GetError());
+        return false;
+    }
+
+    // Initialize IMG
+    if (_verbosity >= VERBOSITY_LOG) Debug::out("Initializing IMG...");
+    int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
+    if (!(IMG_Init(imgFlags) & imgFlags)) {
+        std::string errString = "Application::Initialize failed to initialize SDL_image.";
+        if (_verbosity >= VERBOSITY_LIMITED) Debug::err(errString, IMG_GetError());
+        throw errString; // should this be a death sentence?
+        /* return false */
+    }
+
+    // Initialize TTF
+    if (_verbosity >= VERBOSITY_LOG) Debug::out("Initializing TTF...");
+    if (TTF_Init() == -1) {
+        std::string errString = "Application::Initialize failed to initialize SDL_ttf.";
+        if (_verbosity >= VERBOSITY_LIMITED) Debug::err(errString, TTF_GetError());
+        throw errString; // should this be a death sentence?
+        /* return false */
+    }
+
+    // Initialize the mixer module
+    if (_verbosity >= VERBOSITY_LOG) Debug::out("Initializing Mixer...");
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        std::string errString = "Application::Initialize failed to initialize SDL_mixer.";
+        if (_verbosity >= VERBOSITY_LIMITED) Debug::err(errString, Mix_GetError());
+        throw errString; // should this be a death sentence?
+        /* return false */
+    }
+
+    // Set the resolution ratios
+    if (_verbosity >= VERBOSITY_LOG) Debug::out("Setting resolution ratios...");
+    if (_verbosity == VERBOSITY_ALL) Debug::out("Input calculation for width: " + std::to_string(float(_width)) + " / " + std::to_string(float(_defaultWidth)));
+    if (_verbosity == VERBOSITY_ALL) Debug::out("Input calculation for height: " + std::to_string(float(_height)) + " / " + std::to_string(float(_defaultHeight)));
+    _widthRatio = float(_width) / float(_defaultWidth);
+    _heightRatio = float(_height) / float(_defaultHeight);
+
+    if (_verbosity > VERBOSITY_LOG) Debug::out("Ratios set:\n\tWidth: " + std::to_string(_widthRatio) + "\n\tHeight: " + std::to_string(_heightRatio));
+    if (_verbosity > VERBOSITY_LOG) Debug::out("Setting render scale...");
+    SDL_RenderSetScale(_renderer, _widthRatio, _heightRatio);
+
+    return true;
 }
 
 /*-----------------------------------------------------------------*/
 int Application::Run() {
+    _running = true;
+    SDL_Event e;
+
+    while (_running) {
+        while (SDL_PollEvent(&e) != 0) {
+            if (e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE) {
+                _running = false;
+                break;
+            } else if (e.key.keysym.sym == SDLK_F5) {
+                SetFullscreen(!IsFullscreen()); // TODO: fix
+            }
+        }
+
+        renderStart();
+        render();
+        renderEnd();
+    }
+
+    exit();
     return 0;
 }
 
 /*-----------------------------------------------------------------*/
 void Application::SetHeader(std::string header) {
-
+    _header = header;
+    refreshWindow();
 }
 
 /*-----------------------------------------------------------------*/
 void Application::SetResolution(unsigned int width, unsigned int height) {
-
+    _width = width;
+    _height = height;
+    refreshWindow();
 }
 
 /*-----------------------------------------------------------------*/
 void Application::SetFullscreen(bool fullscreen) {
+    if (fullscreen && !IsFullscreen()) {
+        if (_verbosity >= VERBOSITY_LOG) Debug::out("Setting up fullscreen...");
+        SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN);
+    }
 
+    else if (!fullscreen && IsFullscreen()) {
+        if (_verbosity >= VERBOSITY_LOG) Debug::out("Turning off fullscreen...");
+        SDL_SetWindowFullscreen(_window, 0);
+    }
 }
 
 /*-----------------------------------------------------------------*/
@@ -80,7 +195,7 @@ unsigned int Application::ScreenHeight() {
 
 /*-----------------------------------------------------------------*/
 bool Application::IsFullscreen() {
-    return false;
+    return (SDL_GetWindowFlags(_window) & SDL_WINDOW_FULLSCREEN);
 }
 
 /*-----------------------------------------------------------------*/
@@ -95,7 +210,8 @@ SDL_Renderer* Application::GetRenderer() {
 
 /*-----------------------------------------------------------------*/
 void Application::renderStart() {
-
+    SDL_SetRenderDrawColor(_renderer, 0x0, 0x0, 0x0, 0xFF);
+    SDL_RenderClear(_renderer);
 }
 
 /*-----------------------------------------------------------------*/
@@ -105,7 +221,7 @@ void Application::render() {
 
 /*-----------------------------------------------------------------*/
 void Application::renderEnd() {
-
+    SDL_RenderPresent(_renderer);
 }
 
 /*-----------------------------------------------------------------*/
@@ -115,7 +231,23 @@ void Application::refreshWindow() {
 
 /*-----------------------------------------------------------------*/
 void Application::exit() {
+    if (_verbosity >= VERBOSITY_LOG) Debug::out("Cleaning up renderer...");
+    if (_renderer != NULL) {
+        SDL_DestroyRenderer(_renderer);
+        _renderer = NULL;
+    }
 
+    if (_verbosity >= VERBOSITY_LOG) Debug::out("Cleaning up window...");
+    if (_window != NULL) {
+        SDL_DestroyWindow(_window);
+        _window = NULL;
+    }
+
+    Debug::out("Exiting Deviant. Bye!", ANSI_COLOR_CYAN);
+    TTF_Quit();
+    IMG_Quit();
+    Mix_Quit();
+    SDL_Quit();
 }
 
 // EOF Application.cpp

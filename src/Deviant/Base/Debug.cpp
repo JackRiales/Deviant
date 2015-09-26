@@ -1,5 +1,5 @@
 /*
-    Deviant - SFML Game Library
+    Deviant - SDL Game Library
     Copyright (C) 2015 Jack Riales (jack@thatnaughtypanda.com)
 
     This software is provided 'as-is', without any express or implied warranty.
