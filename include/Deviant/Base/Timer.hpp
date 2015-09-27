@@ -21,28 +21,43 @@
 */
 
 /**
-    \file   Application.hpp
+    \file   Timer.hpp
     \author Jack Riales (jack@thatnaughtypanda.com)
     \date   September, 2015
     \ingroup Base
 */
 
-#ifndef DVNT_NODE_HPP
-#define DVNT_NODE_HPP
+#ifndef DVNT_TIMER_HPP
+#define DVNT_TIMER_HPP
+
+#include <SDL2/SDL.h>
 
 namespace dv {
 
-class RenderNode {
+class Timer {
     public:
-        RenderNode();
-        virtual ~RenderNode() = 0;
+        Timer();
 
+        void start();
+        void stop();
+        void pause();
+        void unpause();
+
+        Uint32 getTicks();
+
+        bool isStarted();
+        bool isPaused();
     private:
-        int             _id;
-        std::string     _name;
-        unsigned int    _drawLayer;
+        Uint32 _start;
+        Uint32 _pause;
+        bool _started;
+        bool _paused;
 };
 
 }
 
-#endif // DVNT_NODE_HPP
+#endif // DVNT_TIMER_HPP
+
+
+// EOF Timer.hpp
+// Location at: /include/Deviant/Base/Timer.hpp

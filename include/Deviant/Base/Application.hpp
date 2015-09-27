@@ -36,6 +36,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
+#include "Timer.hpp"
 
 // Log verbosity constants
 #define VERBOSITY_NONE 0
@@ -63,9 +64,9 @@ class Application {
             \throw SDL initialization messages.
         */
         static bool Initialize(std::string header = "Deviant Application",
-                               unsigned int width = 800, unsigned int height = 600,
-                               unsigned int defaultWidth = 600, unsigned int defaultHeight = 600,
-                               unsigned int framerate = 60, int verbosity = VERBOSITY_LIMITED);
+                               unsigned width = 800, unsigned height = 600,
+                               unsigned defaultWidth = 600, unsigned defaultHeight = 600,
+                               unsigned framerate = 60, int verbosity = VERBOSITY_LIMITED);
 
         /**
             \brief Application run method.
@@ -81,7 +82,7 @@ class Application {
         /**
             \brief Set the resolution.
         */
-        static void SetResolution(unsigned int width, unsigned int height);
+        static void SetResolution(unsigned width, unsigned height);
 
         /**
             \brief Change fullscreen to on or off.
@@ -96,12 +97,12 @@ class Application {
         /**
             \return resolution width.
         */
-        static unsigned int ScreenWidth();
+        static unsigned ScreenWidth();
 
         /**
             \return resolution height.
         */
-        static unsigned int ScreenHeight();
+        static unsigned ScreenHeight();
 
         /**
             \return TRUE if window is fullscreen, FALSE if not.
@@ -146,17 +147,18 @@ class Application {
 
     private:
         static std::string          _header;
-        static unsigned int         _width;
-        static unsigned int         _height;
-        static unsigned int         _defaultWidth;
-        static unsigned int         _defaultHeight;
+        static unsigned             _width;
+        static unsigned             _height;
+        static unsigned             _defaultWidth;
+        static unsigned             _defaultHeight;
         static float                _widthRatio;
         static float                _heightRatio;
-        static unsigned int         _framerate;
+        static unsigned             _framerate;
         static bool                 _running;
         static int                  _verbosity;
         static SDL_Window*          _window;
         static SDL_Renderer*        _renderer;
+        static Timer                _timer;
 };
 
 } // Exit dv namespace

@@ -28,20 +28,21 @@ using namespace dv;
 /* Static Declarations --------------------------------------------*/
 /*-----------------------------------------------------------------*/
 std::string     Application::_header;
-unsigned int    Application::_width;
-unsigned int    Application::_height;
-unsigned int    Application::_defaultWidth;
-unsigned int    Application::_defaultHeight;
+unsigned        Application::_width;
+unsigned        Application::_height;
+unsigned        Application::_defaultWidth;
+unsigned        Application::_defaultHeight;
 float           Application::_widthRatio;
 float           Application::_heightRatio;
-unsigned int    Application::_framerate;
+unsigned        Application::_framerate;
 bool            Application::_running;
 int             Application::_verbosity;
 SDL_Window*     Application::_window    = NULL;
 SDL_Renderer*   Application::_renderer  = NULL;
+Timer           Application::_timer;
 
 /*-----------------------------------------------------------------*/
-bool Application::Initialize(std::string header, unsigned int width, unsigned int height, unsigned int defaultWidth, unsigned int defaultHeight, unsigned int framerate, int verbosity) {
+bool Application::Initialize(std::string header, unsigned width, unsigned height, unsigned defaultWidth, unsigned defaultHeight, unsigned framerate, int verbosity) {
     Debug::out("Initializing Deviant. Please wait for awesome things to happen.", ANSI_COLOR_CYAN);
     _header = header;
     _width = width;
@@ -131,15 +132,31 @@ bool Application::Initialize(std::string header, unsigned int width, unsigned in
 /*-----------------------------------------------------------------*/
 int Application::Run() {
     Debug::out("Beginning run of " + _header + ".", ANSI_COLOR_CYAN);
+
+    // Application now running
     _running = true;
+
+    // Calculated number of ticks per frame given the frame rate
+    float tpf = 1000 / _framerate;
+
+    // SDL event handler
     SDL_Event e;
 
+    // Main loop
     while (_running) {
+        // Start this frame's timer
+        _timer.start();
+
+        // SDL frame events
         while (SDL_PollEvent(&e) != 0) {
+            // Log window events
             if (e.type == SDL_WINDOWEVENT && _verbosity >= VERBOSITY_LOG) {
                 switch(e.window.event) {
                 case SDL_WINDOWEVENT_MOVED:
                     Debug::out("Window " + std::to_string(e.window.windowID) + " moved to " + std::to_string(e.window.data1) + ", " + std::to_string(e.window.data2) + ".");
+                    break;
+                case SDL_WINDOWEVENT_MINIMIZED:
+                    Debug::out("Window " + std::to_string(e.window.windowID) + " minimized.");
                     break;
                 case SDL_WINDOWEVENT_FOCUS_GAINED:
                     Debug::out("Window " + std::to_string(e.window.windowID) + " focus gained.");
@@ -151,19 +168,33 @@ int Application::Run() {
                     Debug::out("Window " + std::to_string(e.window.windowID) + " closed.");
                     break;
                 }
-            } else if (e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE) {
+            }
+
+            // Handle application quit event
+            else if (e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE) {
                 _running = false;
                 break;
-            } else if (e.key.keysym.sym == SDLK_F5) {
+            }
+
+            // Handle fullscreen toggler
+            else if (e.key.keysym.sym == SDLK_F5) {
                 SetFullscreen(!IsFullscreen()); // TODO: fix
             }
         }
 
+        // Render method
         renderStart();
         render();
         renderEnd();
+
+        // FPS cap
+        unsigned frameTicks = _timer.getTicks();
+        if (frameTicks < tpf) {
+            SDL_Delay(tpf - frameTicks);
+        }
     }
 
+    // Clean up
     exit();
     return 0;
 }
@@ -175,7 +206,7 @@ void Application::SetHeader(std::string header) {
 }
 
 /*-----------------------------------------------------------------*/
-void Application::SetResolution(unsigned int width, unsigned int height) {
+void Application::SetResolution(unsigned width, unsigned height) {
     _width = width;
     _height = height;
     refreshWindow();
@@ -200,12 +231,12 @@ std::string Application::Header() {
 }
 
 /*-----------------------------------------------------------------*/
-unsigned int Application::ScreenWidth() {
+unsigned Application::ScreenWidth() {
     return Application::_width;
 }
 
 /*-----------------------------------------------------------------*/
-unsigned int Application::ScreenHeight() {
+unsigned Application::ScreenHeight() {
     return Application::_height;
 }
 
