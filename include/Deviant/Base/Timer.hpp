@@ -36,16 +36,44 @@ namespace dv {
 
 class Timer {
     public:
+        /**
+            \brief Constructor.
+         */
         Timer();
 
+        /**
+            \brief Start the timer.
+         */
         void start();
+
+        /**
+            \brief Stop the timer.
+         */
         void stop();
+
+        /**
+            \brief Pause the timer without stopping it.
+         */
         void pause();
+
+        /**
+            \brief Unpause the timer.
+         */
         void unpause();
 
+        /**
+            \brief Get the current ticks.
+        */
         Uint32 getTicks();
 
+        /**
+            \brief Is the timer started?
+        */
         bool isStarted();
+
+        /**
+            \brief Is the timer paused?
+        */
         bool isPaused();
     private:
         Uint32 _start;
