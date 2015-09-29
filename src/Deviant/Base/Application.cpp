@@ -273,7 +273,22 @@ void Application::renderEnd() {
 
 /*-----------------------------------------------------------------*/
 void Application::refreshWindow() {
+    // Destroy the current window
+    if (_verbosity >= VERBOSITY_LOG) Debug::out("Destroying window...");
+    if (_window != NULL) {
+        SDL_DestroyWindow(_window);
+        _window = NULL;
+    } else {
+        throw "Application::refreshWindow(): Application window shown null.";
+    }
 
+    // Create a window
+    if (_verbosity >= VERBOSITY_LOG) Debug::out("Creating new window...");
+    _window = SDL_CreateWindow(_header.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+                               _width, _height, SDL_WINDOW_SHOWN);
+    if (_window == NULL) {
+        throw "Application::refreshWindow(): Failed to generate a window.";
+    }
 }
 
 /*-----------------------------------------------------------------*/
