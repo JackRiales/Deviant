@@ -20,26 +20,33 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
+#include "Deviant/Management/InputProcessor.hpp"
 #include "Deviant/Base/Debug.hpp"
 using namespace dv;
 
 /*-----------------------------------------------------------------*/
-void Debug::out(std::string message, std::string color) {
-    std::string output = color + message + ANSI_COLOR_RESET + "\n";
-    printf(output.c_str());
+void InputProcessor::processEvent(SDL_Event *e) {
+    while (SDL_PollEvent(e) != 0) {
+        if (e->type != SDL_QUIT)
+            e->type = handleInput(e);
+    }
 }
 
 /*-----------------------------------------------------------------*/
-void Debug::warn(std::string message, std::string color) {
-    std::string output = color + "Warning: " + message + ANSI_COLOR_RESET + "\n";
-    printf(output.c_str());
+Uint32 InputProcessor::handleInput(SDL_Event *e) {
+    if (e->type == SDL_KEYDOWN) {
+        if (e->key.keysym.sym == SDLK_ESCAPE)
+            return SDL_QUIT;
+    }
+    return SDL_SYSWMEVENT;
 }
 
 /*-----------------------------------------------------------------*/
-void Debug::err(std::string message, std::string error, std::string color) {
-    std::string output = color + message + "\n\tError Message: " + error + ANSI_COLOR_RESET + "\n";
-    printf(output.c_str());
+const Vector2D<int> InputProcessor::MousePosition() {
+    int x, y;
+    SDL_GetMouseState(&x, &y);
+    return (*new Vector2D<int>(x, y));
 }
 
-// EOF Debug.cpp
-// Location at: /src/Deviant/Base/Debug.cpp
+// EOF InputProcessor.cpp
+// Location at: /src/Deviant/Management/InputProcessor.cpp

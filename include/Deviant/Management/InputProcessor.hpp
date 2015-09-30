@@ -20,26 +20,31 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "Deviant/Base/Debug.hpp"
-using namespace dv;
+/**
+    \file   InputProcessor.hpp
+    \author Jack Riales (jack@thatnaughtypanda.com)
+    \date   September, 2015
+    \ingroup Management
+*/
 
-/*-----------------------------------------------------------------*/
-void Debug::out(std::string message, std::string color) {
-    std::string output = color + message + ANSI_COLOR_RESET + "\n";
-    printf(output.c_str());
+#ifndef DVNT_INPUTPROCESSOR_HPP
+#define DVNT_INPUTPROCESSOR_HPP
+
+#include <SDL2/SDL.h>
+#include "Deviant/Math/Vector.hpp"
+
+namespace dv {
+
+class InputProcessor {
+    public:
+        virtual void processEvent(SDL_Event *e);
+        virtual Uint32 handleInput(SDL_Event *e);
+        static const Vector2D<int> MousePosition();
+};
+
 }
 
-/*-----------------------------------------------------------------*/
-void Debug::warn(std::string message, std::string color) {
-    std::string output = color + "Warning: " + message + ANSI_COLOR_RESET + "\n";
-    printf(output.c_str());
-}
+#endif // DVNT_INPUTPROCESSOR_HPP
 
-/*-----------------------------------------------------------------*/
-void Debug::err(std::string message, std::string error, std::string color) {
-    std::string output = color + message + "\n\tError Message: " + error + ANSI_COLOR_RESET + "\n";
-    printf(output.c_str());
-}
-
-// EOF Debug.cpp
-// Location at: /src/Deviant/Base/Debug.cpp
+// EOF InputProcessor.hpp
+// Location at: /include/Deviant/Management/InputProcessor.hpp

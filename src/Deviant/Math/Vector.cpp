@@ -24,6 +24,7 @@
 #include "Deviant/Base/Debug.hpp"
 using namespace dv;
 
+/*-----------------------------------------------------------------*/
 template<typename T>
 Vector2D<T>::Vector2D(T _x, T _y) :
 x(_x),
