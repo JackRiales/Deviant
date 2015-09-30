@@ -30,27 +30,27 @@
 #ifndef DVNT_VECTOR_HPP
 #define DVNT_VECTOR_HPP
 
+#include <cmath>
+
 namespace dv {
 
 template<typename T = int>
 struct Vector2D {
     T   x;
     T   y;
-    float direction;
 
     Vector2D(T _x = 0, T _y = 0);
 
     const T magnitude() const;
-    const T dot(const Vector2D& v);
-    const T dot(Vector2D* v);
+    Vector2D<T> normalized() const;
+
+    const T dot(const Vector2D& v) const;
+
     Vector2D& operator=(const Vector2D& v);
-    Vector2D& operator=(Vector2D* v);
     Vector2D& operator=(const T& v);
     Vector2D& operator+(const Vector2D& v);
-    Vector2D& operator+(Vector2D* v);
     Vector2D& operator+(const T& v);
     Vector2D& operator-(const Vector2D& v);
-    Vector2D& operator-(Vector2D* v);
     Vector2D& operator-(const T& v);
 };
 

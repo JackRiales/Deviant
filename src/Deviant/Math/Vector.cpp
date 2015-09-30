@@ -21,6 +21,7 @@
 */
 
 #include "Deviant/Math/Vector.hpp"
+#include "Deviant/Base/Debug.hpp"
 using namespace dv;
 
 template<typename T>
@@ -33,7 +34,77 @@ y(_y) {
 /*-----------------------------------------------------------------*/
 template<typename T>
 const T Vector2D<T>::magnitude() const {
-    return 0;
+    return sqrt((x*x) + (y*y));
+}
+
+/*-----------------------------------------------------------------*/
+template<typename T>
+Vector2D<T> Vector2D<T>::normalized() const {
+    Vector2D v;
+    T length = magnitude();
+
+    if (length != 0) {
+        v.x = this->x / length;
+        v.y = this->y / length;
+    } else {
+        Debug::warn("Unable to normalize a 0 vector!");
+    }
+
+    return v;
+}
+
+/*-----------------------------------------------------------------*/
+template<typename T>
+const T Vector2D<T>::dot(const Vector2D& v) const {
+    return this->x*v.x + this->y*v.y;
+}
+
+/*-----------------------------------------------------------------*/
+template<typename T>
+Vector2D<T>& Vector2D<T>::operator=(const Vector2D& v) {
+    x = v.x;
+    y = v.y;
+    return *this;
+}
+
+/*-----------------------------------------------------------------*/
+template<typename T>
+Vector2D<T>& Vector2D<T>::operator=(const T& v) {
+    x = v;
+    y = v;
+    return *this;
+}
+
+/*-----------------------------------------------------------------*/
+template<typename T>
+Vector2D<T>& Vector2D<T>::operator+(const Vector2D& v) {
+    x += v.x;
+    y += v.y;
+    return *this;
+}
+
+/*-----------------------------------------------------------------*/
+template<typename T>
+Vector2D<T>& Vector2D<T>::operator+(const T& v) {
+    x += v;
+    y += v;
+    return *this;
+}
+
+/*-----------------------------------------------------------------*/
+template<typename T>
+Vector2D<T>& Vector2D<T>::operator-(const Vector2D& v) {
+    x -= v.x;
+    y -= v.y;
+    return *this;
+}
+
+/*-----------------------------------------------------------------*/
+template<typename T>
+Vector2D<T>& Vector2D<T>::operator-(const T& v) {
+    x -= v;
+    y -= v;
+    return *this;
 }
 
 /*-----------------------------------------------------------------*/
