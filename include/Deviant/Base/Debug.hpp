@@ -70,6 +70,37 @@ void warn(std::string message, std::string color = ANSI_COLOR_YELLOW);
 */
 void err(std::string message, std::string error, std::string color = ANSI_COLOR_RED);
 
+/**
+    \class
+*/
+class Exception {
+    public:
+        /**
+            \enum Log Level
+            \brief Used for exceptions to determine nature of issue.
+        */
+        enum LogLevel {
+            LOG,
+            WARN,
+            ERR,
+            FATAL
+        };
+
+        /**
+            \brief Constructor.
+        */
+        Exception(std::string message, LogLevel level = LogLevel::LOG, std::string location = "");
+
+        /**
+            \brief Outputs formatted message to console.
+        */
+        void output();
+    private:
+        LogLevel _ll;
+        std::string _message;
+        std::string _locale;
+};
+
 }   // Exit dv
 }   // Exit Debug
 

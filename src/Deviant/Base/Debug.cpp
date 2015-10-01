@@ -41,5 +41,28 @@ void Debug::err(std::string message, std::string error, std::string color) {
     printf(output.c_str());
 }
 
+/*-----------------------------------------------------------------*/
+Debug::Exception::Exception(std::string message, LogLevel level, std::string location) :
+_ll (level),
+_message (message),
+_locale (location) {
+
+}
+
+/*-----------------------------------------------------------------*/
+void Debug::Exception::output() {
+    std::string out = _locale + " : " + _message;
+    switch(_ll) {
+    case LOG:
+        break;
+    case WARN:
+        break;
+    case ERR:
+        break;
+    case FATAL:
+        break;
+    }
+}
+
 // EOF Debug.cpp
 // Location at: /src/Deviant/Base/Debug.cpp
