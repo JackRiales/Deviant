@@ -20,32 +20,31 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-/**
-    \file   InputProcessor.hpp
-    \author Jack Riales (jack@thatnaughtypanda.com)
-    \date   September, 2015
-    \ingroup Management
-    \deprecated
-*/
+#include "Deviant/Base/Input.hpp"
+#include "Deviant/Base/Debug.hpp"
+using namespace dv;
 
-#ifndef DVNT_INPUTPROCESSOR_HPP
-#define DVNT_INPUTPROCESSOR_HPP
-
-#include <SDL2/SDL.h>
-#include "Deviant/Math/Vector.hpp"
-
-namespace dv {
-
-class InputProcessor {
-    public:
-        virtual void processEvent(SDL_Event *e);
-        virtual Uint32 handleInput(SDL_Event *e);
-        static const Vector2D<int> MousePosition();
-};
-
+/*-----------------------------------------------------------------*/
+bool Input::KeyDown() {
+    return false;
 }
 
-#endif // DVNT_INPUTPROCESSOR_HPP
+/*-----------------------------------------------------------------*/
+bool Input::KeyPressed() {
+    return false;
+}
 
-// EOF InputProcessor.hpp
-// Location at: /include/Deviant/Management/InputProcessor.hpp
+/*-----------------------------------------------------------------*/
+Vector2D<int> Input::MousePosition() {
+    int x, y;
+    SDL_GetMouseState(&x, &y);
+    return (*new Vector2D<int>(x, y));
+}
+
+/*-----------------------------------------------------------------*/
+void Input::handleInputEvents(SDL_Event *e) {
+    ;
+}
+
+// EOF Input.cpp
+// Location at: /src/Deviant/Base/Input.cpp

@@ -21,6 +21,7 @@
 */
 
 #include "Deviant/Base/Application.hpp"
+#include "Deviant/Base/Input.hpp"
 #include "Deviant/Base/Debug.hpp"
 using namespace dv;
 
@@ -180,6 +181,8 @@ int Application::Run() {
             else if (e.key.keysym.sym == SDLK_F5) {
                 SetFullscreen(!IsFullscreen()); // TODO: fix
             }
+
+            Input::handleInputEvents(&e);
         }
 
         // Render method
