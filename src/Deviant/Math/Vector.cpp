@@ -56,8 +56,15 @@ Vector2D<T> Vector2D<T>::normalized() const {
 
 /*-----------------------------------------------------------------*/
 template<typename T>
-const T Vector2D<T>::dot(const Vector2D& v) const {
+T Vector2D<T>::dot(const Vector2D& v) {
     return this->x*v.x + this->y*v.y;
+}
+
+/*-----------------------------------------------------------------*/
+template<typename T>
+void Vector2D<T>::scale(const Vector2D& v) {
+    this->x *= v.x;
+    this->y *= v.y;
 }
 
 /*-----------------------------------------------------------------*/
