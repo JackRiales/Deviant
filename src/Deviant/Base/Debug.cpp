@@ -54,12 +54,16 @@ void Debug::Exception::output() {
     std::string out = _locale + " : " + _message;
     switch(_ll) {
     case LOG:
+        Debug::out(out);
         break;
     case WARN:
+        Debug::warn(out);
         break;
     case ERR:
+        Debug::err("A serious error has occurred.", out);
         break;
     case FATAL:
+        Debug::err("A fatal error has occurred.", out);
         break;
     }
 }
