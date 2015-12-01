@@ -93,7 +93,7 @@ class Application {
         /**
             \return header.
         */
-        static std::string  Header();
+        static std::string Header();
 
         /**
             \return resolution width.
@@ -113,7 +113,7 @@ class Application {
         /**
             \return TRUE if running, FALSE if not.
         */
-        static bool         IsRunning();
+        static bool IsRunning();
 
         /**
             \return SDL renderer.
