@@ -21,41 +21,31 @@
 */
 
 /**
-    \file   Singleton.hpp
+    \file   Rect.hpp
     \author Jack Riales (jack@thatnaughtypanda.com)
     \date   November, 2015
-    \ingroup Utilities
+    \ingroup Math
 */
 
-#ifndef DVNT_SINGLETON_HPP
-#define DVNT_SINGLETON_HPP
+#ifndef DVNT_RECT_HPP
+#define DVNT_RECT_HPP
 
 namespace dv {
 
-template<class T>
-class Singleton {
-    public:
-        /**
-            \return the Singleton instance.
-        */
-        static T* Instance();
-
-        /**
-            \return TRUE if the singleton instance exists, FALSE if not.
-        */
-        static bool Exists();
-    protected:
-        Singleton();
-        virtual ~Singleton();
-    private:
-        Singleton(Singleton const&);
-        Singleton& operator=(Singleton const&);
-        static T* _instance;
+template<typename T = int>
+struct Rect {
+    T   x;
+    T   y;
+    T   w;
+    T   h;
 };
+
+typedef Rect<int> IntRect;
+typedef Rect<float> FloatRect;
 
 }
 
-#endif // DVNT_SINGLETON_HPP
+#endif // DVNT_RECT_HPP
 
-// EOF Singleton.hpp
-// Location at: /include/Deviant/Management/Singleton.hpp
+// EOF Rect.hpp
+// Location at: /include/Deviant/Math/Rect.hpp

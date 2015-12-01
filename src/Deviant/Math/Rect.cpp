@@ -16,40 +16,20 @@
 
     2. Altered source versions must be plainly marked as such,
     and must not be misrepresented as being the original software.
-
+// EOF Vector.cpp
+// Location at: /src/Deviant/Math/Vector.cpp
     3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "Deviant/Utilities/Singleton.hpp"
+#include "Deviant/Math/Rect.hpp"
 #include "Deviant/Base/Debug.hpp"
 using namespace dv;
 
-/*-----------------------------------------------------------------*/
-/* Static Declarations --------------------------------------------*/
-/*-----------------------------------------------------------------*/
-template<class T>
-T* Singleton<T>::_instance = NULL;
+
 
 /*-----------------------------------------------------------------*/
-template<class T>
-T* Singleton<T>::Instance() {
-    if (_instance == NULL) {
-        Debug::warn("Singleton<T>::Instance(): Returned null. Generating new singleton instance.");
-        _instance = new T;
-        if (_instance == NULL) {
-            Debug::err("Instance could not be created.", "New instance returned null.");
-        }
-    }
-    #ifdef __DEBUG__
-        assert(_instance != NULL);
-    #endif
-    return _instance;
-}
+template class Rect<int>;
+template class Rect<float>;
 
-/*-----------------------------------------------------------------*/
-template<class T>
-bool Singleton<T>::Exists() {
-    return (_instance != NULL);
-}
-
-/*-----------------------------------------------------------------*/
+// EOF Rect.cpp
+// Location at: /src/Deviant/Math/Rect.cpp

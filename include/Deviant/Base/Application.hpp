@@ -37,6 +37,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 #include "Timer.hpp"
+#include "Deviant/Utilities/Singleton.hpp"
 
 // Log verbosity constants
 #define VERBOSITY_NONE 0
