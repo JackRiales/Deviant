@@ -34,6 +34,10 @@ namespace dv {
 
 template<typename T = int>
 struct Rect {
+    Rect(T _x = 0, T _y = 0, T _w = 0, T _h = 0);
+
+    bool intersect(Rect r);
+
     T   x;
     T   y;
     T   w;

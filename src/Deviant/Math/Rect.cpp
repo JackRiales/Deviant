@@ -16,8 +16,7 @@
 
     2. Altered source versions must be plainly marked as such,
     and must not be misrepresented as being the original software.
-// EOF Vector.cpp
-// Location at: /src/Deviant/Math/Vector.cpp
+
     3. This notice may not be removed or altered from any source distribution.
 */
 
@@ -25,7 +24,21 @@
 #include "Deviant/Base/Debug.hpp"
 using namespace dv;
 
+/*-----------------------------------------------------------------*/
+template<typename T>
+Rect<T>::Rect(T _x, T _y, T _w, T _h) :
+x(_x),
+y(_y),
+w(_w),
+h(_h) {
 
+}
+
+/*-----------------------------------------------------------------*/
+template<typename T>
+bool Rect<T>::intersect(Rect r) {
+    return false;
+}
 
 /*-----------------------------------------------------------------*/
 template class Rect<int>;
