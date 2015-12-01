@@ -30,13 +30,33 @@
 #ifndef DVNT_RECT_HPP
 #define DVNT_RECT_HPP
 
+#include "Vector.hpp"
+
 namespace dv {
 
+/**
+    \struct Rect
+    \brief Defines a geometrical rectangle.
+*/
 template<typename T = int>
 struct Rect {
+    /**
+        Constructor
+    */
     Rect(T _x = 0, T _y = 0, T _w = 0, T _h = 0);
 
+    /**
+        \return Whether or not the rectangle is intersecting rectangle r.
+        \param r The rectangle to check against.
+    */
     bool intersect(Rect r);
+
+    /**
+        \return If the point vector v is inside the rectangle.
+        \param v The vector to check.
+    */
+    template<typename V>
+    bool contains(Vector2D<V> v);
 
     T   x;
     T   y;
@@ -44,6 +64,7 @@ struct Rect {
     T   h;
 };
 
+// Shorthand type definitions
 typedef Rect<int> IntRect;
 typedef Rect<float> FloatRect;
 

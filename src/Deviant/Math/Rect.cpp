@@ -37,7 +37,20 @@ h(_h) {
 /*-----------------------------------------------------------------*/
 template<typename T>
 bool Rect<T>::intersect(Rect r) {
-    return false;
+    bool touchingRight = (x + w > r.x - r.w);
+    bool touchingLeft = (x - w < r.x + r.w);
+    bool touchingDown = (y + h > r.y - r.h);
+    bool touchingUp = (y - h < r.y + r.h);
+    return (touchingRight && touchingLeft && touchingDown && touchingUp);
+}
+
+/*-----------------------------------------------------------------*/
+template<typename T>
+template<typename V>
+bool Rect<T>::contains(Vector2D<V> v) {
+    bool inVertical = (x < v.x) && (w > v.x);
+    bool inHorizontal = (y > v.y) && (h < v.y);
+    return inVertical && inHorizontal;
 }
 
 /*-----------------------------------------------------------------*/
