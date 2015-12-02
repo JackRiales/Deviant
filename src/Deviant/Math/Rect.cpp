@@ -36,6 +36,16 @@ h(_h) {
 
 /*-----------------------------------------------------------------*/
 template<typename T>
+Rect<T>::Rect(const Rect& cpy) :
+x(cpy.x),
+y(cpy.y),
+w(cpy.w),
+h(cpy.h) {
+
+}
+
+/*-----------------------------------------------------------------*/
+template<typename T>
 bool Rect<T>::intersect(Rect r) {
     bool touchingRight = (x + w > r.x - r.w);
     bool touchingLeft = (x - w < r.x + r.w);

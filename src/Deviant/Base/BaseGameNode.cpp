@@ -79,12 +79,22 @@ void BaseGameNode::start() {
 
 /*-----------------------------------------------------------------*/
 void BaseGameNode::update() {
+    /*
+        Game Node Update Event
 
+        Called every update pass.
+    */
+    ;
 }
 
 /*-----------------------------------------------------------------*/
 void BaseGameNode::draw() {
+    /*
+        Game Node Draw Event
 
+        Called for the render pass. Intended to be used for
+        graphical rendering.
+    */
 }
 
 // EOF BaseGameNode.cpp

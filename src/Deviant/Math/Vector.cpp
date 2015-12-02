@@ -34,6 +34,14 @@ y(_y) {
 
 /*-----------------------------------------------------------------*/
 template<typename T>
+Vector2D<T>::Vector2D(const Vector2D& cpy) :
+x(cpy.x),
+y(cpy.y) {
+
+}
+
+/*-----------------------------------------------------------------*/
+template<typename T>
 const T Vector2D<T>::magnitude() const {
     return sqrt((x*x) + (y*y));
 }

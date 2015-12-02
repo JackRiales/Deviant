@@ -46,6 +46,11 @@ struct Rect {
     Rect(T _x = 0, T _y = 0, T _w = 0, T _h = 0);
 
     /**
+        Copy constructor
+    */
+    Rect(const Rect& cpy);
+
+    /**
         \return Whether or not the rectangle is intersecting rectangle r.
         \param r The rectangle to check against.
     */
