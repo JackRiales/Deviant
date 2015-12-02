@@ -20,39 +20,72 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "Deviant/Utilities/Singleton.hpp"
+#include "Deviant/Base/BaseGameNode.hpp"
 #include "Deviant/Base/Debug.hpp"
 using namespace dv;
 
 /*-----------------------------------------------------------------*/
-/* Static Declarations --------------------------------------------*/
-/*-----------------------------------------------------------------*/
-template<class T>
-T* Singleton<T>::_instance = NULL;
+BaseGameNode::BaseGameNode() :
+_id (-1),
+_static (false),
+_rendered (true),
+_parent (NULL) {
+    ;
+}
 
 /*-----------------------------------------------------------------*/
-template<class T>
-T* Singleton<T>::Instance() {
-    if (_instance == NULL) {
-        Debug::warn("Singleton<T>::Instance(): Returned null. Generating new singleton instance.");
-        _instance = new T;
-        if (_instance == NULL) {
-            Debug::err("Instance could not be created.", "New instance returned null.");
+BaseGameNode::BaseGameNode(Vector2D<float> position) :
+_id (-1),
+_position (position),
+_static (false),
+_rendered (true),
+_parent (NULL) {
+    ;
+}
+
+/*-----------------------------------------------------------------*/
+BaseGameNode::~BaseGameNode() {
+    // Clean parent reference
+    if (_parent != NULL) {
+        /*delete _parent;*/
+        _parent = NULL;
+    }
+
+    // Delete and clean children
+    for (unsigned int i = 0; i < _children.size(); i++) {
+        if (_children[i] != NULL) {
+            /*delete _children[i];*/
+            _children[i]->_parent = NULL;
+            _children[i] = NULL;
         }
     }
-    #ifdef __DEBUG__
-        assert(_instance != NULL);
-    #endif
-    return _instance;
 }
 
 /*-----------------------------------------------------------------*/
-template<class T>
-bool Singleton<T>::Exists() {
-    return (_instance != NULL);
+void BaseGameNode::start() {
+    /*
+        BaseGameNode Start Event
+
+        Not to be confused with awake(), start() runs
+        when the game state begins.
+
+        This should be used for interactions with the world,
+        since its performed when the world is ready for it,
+        instead of for the object-centric purposes (initialization, etc).
+        Use a constructor for that instead.
+    */
+    ;
 }
 
 /*-----------------------------------------------------------------*/
+void BaseGameNode::update() {
 
-// EOF Singleton.cpp
-// Location at: /src/Deviant/Base/Singleton.cpp
+}
+
+/*-----------------------------------------------------------------*/
+void BaseGameNode::draw() {
+
+}
+
+// EOF BaseGameNode.cpp
+// Location at: /src/Deviant/Base/BaseGameNode.cpp
