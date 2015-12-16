@@ -31,7 +31,7 @@
 #define DVNT_BASEGAMENODE_HPP
 
 #include <vector>
-#include "Deviant/Math/Vector.hpp"
+#include "Deviant/Utilities/Math/Vector.hpp"
 
 namespace dv {
 

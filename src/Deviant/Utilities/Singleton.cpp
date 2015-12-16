@@ -21,7 +21,7 @@
 */
 
 #include "Deviant/Utilities/Singleton.hpp"
-#include "Deviant/Base/Debug.hpp"
+#include "Deviant/Utilities/Debug.hpp"
 using namespace dv;
 
 /*-----------------------------------------------------------------*/

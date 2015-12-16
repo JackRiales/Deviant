@@ -20,8 +20,8 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "Deviant/Base/BaseGameNode.hpp"
-#include "Deviant/Base/Debug.hpp"
+#include "Deviant/Runtime/BaseGameNode.hpp"
+#include "Deviant/Utilities/Debug.hpp"
 using namespace dv;
 
 /*-----------------------------------------------------------------*/

@@ -20,20 +20,15 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-/**
- *  \file   Debug.hpp
- *  \author Jack Riales (jack@thatnaughtypanda.com)
- *  \date   September, 2015
- *  \brief  Defines methods for easy and pretty debug output.
- *  \ingroup Base
- */
-
 #ifndef DVNT_DEBUG_HPP
 #define DVNT_DEBUG_HPP
 
 #include <stdio.h>
 #include <string>
 
+/**
+    \def Console coloring. Unix systems only.
+*/
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 #define ANSI_COLOR_RED ""
 #define ANSI_COLOR_GREEN ""
@@ -52,7 +47,23 @@
 #define ANSI_COLOR_RESET   "\x1b[0m"
 #endif
 
+/**
+    \def Verbosity constants
+*/
+#define VERBOSITY_NONE 0
+#define VERBOSITY_LIMITED 1
+#define VERBOSITY_ERROR 2
+#define VERBOSITY_WARN 3
+#define VERBOSITY_LOG 4
+#define VERBOSITY_ALL 5
+
 namespace dv {
+
+/**
+    \namespace Debug
+    \ingroup Utilities
+    \brief Defines functions for logging debug information to console.
+*/
 namespace Debug {
 
 /**

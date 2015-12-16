@@ -20,9 +20,7 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "Deviant/Base/Application.hpp"
-#include "Deviant/Base/Input.hpp"
-#include "Deviant/Base/Debug.hpp"
+#include "Deviant/Runtime/Application.hpp"
 using namespace dv;
 
 /*-----------------------------------------------------------------*/

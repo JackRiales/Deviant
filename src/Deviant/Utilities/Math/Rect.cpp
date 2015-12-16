@@ -20,31 +20,52 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "Deviant/Base/Input.hpp"
-#include "Deviant/Base/Debug.hpp"
+#include "Deviant/Utilities/Math/Rect.hpp"
+#include "Deviant/Utilities/Debug.hpp"
 using namespace dv;
 
 /*-----------------------------------------------------------------*/
-bool Input::KeyDown() {
-    return false;
+template<typename T>
+Rect<T>::Rect(T _x, T _y, T _w, T _h) :
+x(_x),
+y(_y),
+w(_w),
+h(_h) {
+
 }
 
 /*-----------------------------------------------------------------*/
-bool Input::KeyPressed() {
-    return false;
+template<typename T>
+Rect<T>::Rect(const Rect& cpy) :
+x(cpy.x),
+y(cpy.y),
+w(cpy.w),
+h(cpy.h) {
+
 }
 
 /*-----------------------------------------------------------------*/
-Vector2D<int> Input::MousePosition() {
-    int x, y;
-    SDL_GetMouseState(&x, &y);
-    return (*new Vector2D<int>(x, y));
+template<typename T>
+bool Rect<T>::intersect(Rect r) {
+    bool touchingRight = (x + w > r.x - r.w);
+    bool touchingLeft = (x - w < r.x + r.w);
+    bool touchingDown = (y + h > r.y - r.h);
+    bool touchingUp = (y - h < r.y + r.h);
+    return (touchingRight && touchingLeft && touchingDown && touchingUp);
 }
 
 /*-----------------------------------------------------------------*/
-void Input::handleInputEvents(SDL_Event *e) {
-    ;
+template<typename T>
+template<typename V>
+bool Rect<T>::contains(Vector2D<V> v) {
+    bool inVertical = (x < v.x) && (w > v.x);
+    bool inHorizontal = (y > v.y) && (h < v.y);
+    return inVertical && inHorizontal;
 }
 
-// EOF Input.cpp
-// Location at: /src/Deviant/Base/Input.cpp
+/*-----------------------------------------------------------------*/
+template class Rect<int>;
+template class Rect<float>;
+
+// EOF Rect.cpp
+// Location at: /src/Deviant/Math/Rect.cpp

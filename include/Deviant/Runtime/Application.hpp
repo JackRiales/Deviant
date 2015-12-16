@@ -20,13 +20,6 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-/**
-    \file   Application.hpp
-    \author Jack Riales (jack@thatnaughtypanda.com)
-    \date   September, 2015
-    \ingroup Base
-*/
-
 #ifndef DVNT_APPLICATION_HPP
 #define DVNT_APPLICATION_HPP
 
@@ -36,22 +29,17 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
-#include "Timer.hpp"
+#include "Deviant/Utilities/Timer.hpp"
 #include "Deviant/Utilities/Singleton.hpp"
-
-// Log verbosity constants
-#define VERBOSITY_NONE 0
-#define VERBOSITY_LIMITED 1
-#define VERBOSITY_ERROR 2
-#define VERBOSITY_WARN 3
-#define VERBOSITY_LOG 4
-#define VERBOSITY_ALL 5
+#include "Deviant/Utilities/Debug.hpp"
+#include "Deviant/Runtime/Input.hpp"
 
 namespace dv {
 
 /**
     \class Application
     \brief  Primary application-controlling class, responsible for windowing and maintaining context.
+
     Application is a class responsible for opening and maintaining a window and its context, as well as operate SDL's needs and perform layered rendering in a main loop.
 */
 class Application {
@@ -71,6 +59,7 @@ class Application {
 
         /**
             \brief Application run method.
+
             Runs main loop of the application.
         */
         static int Run();

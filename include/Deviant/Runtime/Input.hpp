@@ -34,7 +34,7 @@
 #include <vector>
 #include <functional>
 #include <SDL2/SDL.h>
-#include "Deviant/Math/Vector.hpp"
+#include "Deviant/Utilities/Math/Vector.hpp"
 
 namespace dv {
 
