@@ -20,13 +20,6 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-/**
-    \file   Input.hpp
-    \author Jack Riales (jack@thatnaughtypanda.com)
-    \date   September, 2015
-    \ingroup Base
-*/
-
 #ifndef DVNT_INPUT_HPP
 #define DVNT_INPUT_HPP
 
@@ -38,6 +31,10 @@
 
 namespace dv {
 
+/**
+    \class Input
+    \ingroup Runtime
+*/
 class Input {
     public:
         /**

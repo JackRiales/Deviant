@@ -20,13 +20,6 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-/**
-    \file   Singleton.hpp
-    \author Jack Riales (jack@thatnaughtypanda.com)
-    \date   November, 2015
-    \ingroup Utilities
-*/
-
 #ifndef DVNT_SINGLETON_HPP
 #define DVNT_SINGLETON_HPP
 

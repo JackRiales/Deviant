@@ -20,13 +20,6 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-/**
-    \file   Timer.hpp
-    \author Jack Riales (jack@thatnaughtypanda.com)
-    \date   September, 2015
-    \ingroup Base
-*/
-
 #ifndef DVNT_TIMER_HPP
 #define DVNT_TIMER_HPP
 

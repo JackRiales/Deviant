@@ -20,13 +20,6 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-/**
-    \file   Rect.hpp
-    \author Jack Riales (jack@thatnaughtypanda.com)
-    \date   November, 2015
-    \ingroup Math
-*/
-
 #ifndef DVNT_RECT_HPP
 #define DVNT_RECT_HPP
 

@@ -280,7 +280,7 @@ void Application::refreshWindow() {
         SDL_DestroyWindow(_window);
         _window = NULL;
     } else {
-        throw "Application::refreshWindow(): Application window shown null.";
+        throw Debug::Exception("Application window shown null.", Debug::Exception::WARN, "Application::refreshWindow");
     }
 
     // Create a window
@@ -288,7 +288,7 @@ void Application::refreshWindow() {
     _window = SDL_CreateWindow(_header.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                _width, _height, SDL_WINDOW_SHOWN);
     if (_window == NULL) {
-        throw "Application::refreshWindow(): Failed to generate a window.";
+        throw Debug::Exception("Failed to generate a window.", Debug::Exception::ERR, "Application::refreshWindow");
     }
 }
 
