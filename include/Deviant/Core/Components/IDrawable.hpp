@@ -20,31 +20,16 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "Deviant/Runtime/Input.hpp"
-#include "Deviant/Utilities/Debug.hpp"
-using namespace dv;
+#ifndef DVNT_DRAWABLE_INTERFACE_HPP
+#define DVNT_DRAWABLE_INTERFACE_HPP
 
-/*-----------------------------------------------------------------*/
-bool Input::KeyDown() {
-    return false;
+namespace dv {
+
+class IDrawable {
+    public:
+        virtual void draw(/* Sprite batch reference */) = 0;
+};
+
 }
 
-/*-----------------------------------------------------------------*/
-bool Input::KeyPressed() {
-    return false;
-}
-
-/*-----------------------------------------------------------------*/
-Vector2D<int> Input::MousePosition() {
-    int x, y;
-    SDL_GetMouseState(&x, &y);
-    return (*new Vector2D<int>(x, y));
-}
-
-/*-----------------------------------------------------------------*/
-void Input::handleInputEvents(SDL_Event *e) {
-    ;
-}
-
-// EOF Input.cpp
-// Location at: /src/Deviant/Base/Input.cpp
+#endif // DVNT_DRAWABLE_INTERFACE_HPP

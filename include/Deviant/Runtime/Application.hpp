@@ -32,7 +32,7 @@
 #include "Deviant/Utilities/Timer.hpp"
 #include "Deviant/Utilities/Singleton.hpp"
 #include "Deviant/Utilities/Debug.hpp"
-#include "Deviant/Runtime/Input.hpp"
+#include "Deviant/Core/Input.hpp"
 
 namespace dv {
 
