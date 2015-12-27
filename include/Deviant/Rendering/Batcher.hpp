@@ -20,17 +20,26 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-#ifndef DVNT_TRANSFORMABLE_INTERFACE_HPP
-#define DVNT_TRANSFORMABLE_INTERFACE_HPP
+#ifndef DVNT_BATCHER_HPP
+#define DVNT_BATCHER_HPP
+
+#include "Deviant/Rendering/IRenderNode.hpp"
+#include <vector>
 
 namespace dv {
 
-class ITransformable {
+/**
+    \class
+    \brief Defines a sprite batch used to order render passes
+*/
+class Batcher {
     public:
-
+        void mount(IRenderNode& node);
+        void release();
+    private:
+        std::vector<IRenderNode*> _batch;
 };
 
 }
 
-#endif // DVNT_TRANSFORMABLE_INTERFACE_HPP
-
+#endif // DVNT_BATCHER_HPP

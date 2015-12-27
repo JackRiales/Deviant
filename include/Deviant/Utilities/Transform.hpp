@@ -29,8 +29,10 @@
 namespace dv {
 
 /**
-    \class Transform 2D
+    \class Transform2D
     \brief Defines a 2 dimensional transform
+
+    Transform2D will serve the purpose of being the origin point of sprites.
 */
 class Transform2D {
     public:

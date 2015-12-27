@@ -23,14 +23,12 @@
 #ifndef DVNT_APPLICATION_HPP
 #define DVNT_APPLICATION_HPP
 
-// Inclusions
 #include <string>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 #include "Deviant/Utilities/Timer.hpp"
-#include "Deviant/Utilities/Singleton.hpp"
 #include "Deviant/Utilities/Debug.hpp"
 #include "Deviant/Core/Input.hpp"
 
@@ -104,27 +102,7 @@ class Application {
         */
         static bool IsRunning();
 
-        /**
-            \return SDL renderer.
-        */
-        static SDL_Renderer* GetRenderer();
-
     protected:
-        /**
-            \brief Clear the buffer for draw.
-        */
-        static void renderStart();
-
-        /**
-            \brief Draw all render nodes.
-        */
-        static void render();
-
-        /**
-            \brief Display the buffer.
-        */
-        static void renderEnd();
-
         /**
             \brief Recreate the window based on the current values.
         */
@@ -147,7 +125,6 @@ class Application {
         static bool                 _running;
         static int                  _verbosity;
         static SDL_Window*          _window;
-        static SDL_Renderer*        _renderer;
         static Timer                _timer;
 };
 

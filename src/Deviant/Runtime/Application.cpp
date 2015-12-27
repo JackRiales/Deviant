@@ -37,7 +37,6 @@ unsigned        Application::_framerate;
 bool            Application::_running;
 int             Application::_verbosity;
 SDL_Window*     Application::_window    = NULL;
-SDL_Renderer*   Application::_renderer  = NULL;
 Timer           Application::_timer;
 
 /*-----------------------------------------------------------------*/
@@ -78,13 +77,13 @@ bool Application::Initialize(std::string header, unsigned width, unsigned height
     }
 
     // Create the renderer
-    if (_verbosity >= VERBOSITY_LOG) Debug::out("Creating renderer...");
+    /*if (_verbosity >= VERBOSITY_LOG) Debug::out("Creating renderer...");
     _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
     if (_renderer == NULL) {
         std::string errString = "Application::Initialize failed to generate the renderer.";
         if (_verbosity >= VERBOSITY_LIMITED) Debug::err(errString, SDL_GetError());
         return false;
-    }
+    }*/
 
     // Initialize IMG
     if (_verbosity >= VERBOSITY_LOG) Debug::out("Initializing IMG...");
@@ -123,7 +122,7 @@ bool Application::Initialize(std::string header, unsigned width, unsigned height
 
     if (_verbosity > VERBOSITY_LOG) Debug::out("Ratios set:\n\tWidth: " + std::to_string(_widthRatio) + "\n\tHeight: " + std::to_string(_heightRatio));
     if (_verbosity > VERBOSITY_LOG) Debug::out("Setting render scale...");
-    SDL_RenderSetScale(_renderer, _widthRatio, _heightRatio);
+    //SDL_RenderSetScale(_renderer, _widthRatio, _heightRatio);
 
     return true;
 }
@@ -184,9 +183,9 @@ int Application::Run() {
         }
 
         // Render method
-        renderStart();
+        /*renderStart();
         render();
-        renderEnd();
+        renderEnd();*/
 
         // FPS cap
         unsigned frameTicks = _timer.getTicks();
@@ -252,27 +251,6 @@ bool Application::IsRunning() {
 }
 
 /*-----------------------------------------------------------------*/
-SDL_Renderer* Application::GetRenderer() {
-    return Application::_renderer;
-}
-
-/*-----------------------------------------------------------------*/
-void Application::renderStart() {
-    SDL_SetRenderDrawColor(_renderer, 0x45, 0x45, 0x45, 0xFF);
-    SDL_RenderClear(_renderer);
-}
-
-/*-----------------------------------------------------------------*/
-void Application::render() {
-
-}
-
-/*-----------------------------------------------------------------*/
-void Application::renderEnd() {
-    SDL_RenderPresent(_renderer);
-}
-
-/*-----------------------------------------------------------------*/
 void Application::refreshWindow() {
     // Destroy the current window
     if (_verbosity >= VERBOSITY_LOG) Debug::out("Destroying window...");
@@ -295,10 +273,10 @@ void Application::refreshWindow() {
 /*-----------------------------------------------------------------*/
 void Application::exit() {
     if (_verbosity >= VERBOSITY_LOG) Debug::out("Cleaning up renderer...");
-    if (_renderer != NULL) {
+    /*if (_renderer != NULL) {
         SDL_DestroyRenderer(_renderer);
         _renderer = NULL;
-    }
+    }*/
 
     if (_verbosity >= VERBOSITY_LOG) Debug::out("Cleaning up window...");
     if (_window != NULL) {

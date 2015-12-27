@@ -20,16 +20,8 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-#ifndef DVNT_DRAWABLE_INTERFACE_HPP
-#define DVNT_DRAWABLE_INTERFACE_HPP
+#include "Deviant/Rendering/Batcher.hpp"
+using namespace dv;
 
-namespace dv {
+/*-----------------------------------------------------------------*/
 
-class IDrawable {
-    public:
-        virtual void draw(/* Sprite batch reference */) = 0;
-};
-
-}
-
-#endif // DVNT_DRAWABLE_INTERFACE_HPP
