@@ -23,7 +23,9 @@
 #ifndef DVNT_BATCHER_HPP
 #define DVNT_BATCHER_HPP
 
-#include "Deviant/Rendering/IRenderNode.hpp"
+// Forward declaration
+class IRenderNode;
+
 #include <vector>
 
 namespace dv {
@@ -34,8 +36,9 @@ namespace dv {
 */
 class Batcher {
     public:
+        ~Batcher();
         void mount(IRenderNode& node);
-        void release();
+        void render();
     private:
         std::vector<IRenderNode*> _batch;
 };

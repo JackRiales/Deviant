@@ -24,4 +24,22 @@
 using namespace dv;
 
 /*-----------------------------------------------------------------*/
+Batcher::~Batcher() {
+    for(auto itr = _batch.begin(); itr != _batch.end(); ++itr) {
+        if ((*itr) != 0) delete (*itr);
+    }
 
+    _batch.clear();
+}
+
+/*-----------------------------------------------------------------*/
+void Batcher::mount(IRenderNode& node) {
+    _batch.push_back(&node);
+}
+
+/*-----------------------------------------------------------------*/
+void Batcher::render() {
+    for(auto itr = _batch.begin(); itr != _batch.end(); ++itr) {
+        (*itr)->draw();
+    }
+}

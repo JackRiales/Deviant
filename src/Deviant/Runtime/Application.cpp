@@ -36,7 +36,8 @@ float           Application::_heightRatio;
 unsigned        Application::_framerate;
 bool            Application::_running;
 int             Application::_verbosity;
-SDL_Window*     Application::_window    = NULL;
+SDL_Window*     Application::_window = NULL;
+Renderer        Application::_renderer;
 Timer           Application::_timer;
 
 /*-----------------------------------------------------------------*/
@@ -76,15 +77,6 @@ bool Application::Initialize(std::string header, unsigned width, unsigned height
         return false;
     }
 
-    // Create the renderer
-    /*if (_verbosity >= VERBOSITY_LOG) Debug::out("Creating renderer...");
-    _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
-    if (_renderer == NULL) {
-        std::string errString = "Application::Initialize failed to generate the renderer.";
-        if (_verbosity >= VERBOSITY_LIMITED) Debug::err(errString, SDL_GetError());
-        return false;
-    }*/
-
     // Initialize IMG
     if (_verbosity >= VERBOSITY_LOG) Debug::out("Initializing IMG...");
     int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
@@ -122,7 +114,9 @@ bool Application::Initialize(std::string header, unsigned width, unsigned height
 
     if (_verbosity > VERBOSITY_LOG) Debug::out("Ratios set:\n\tWidth: " + std::to_string(_widthRatio) + "\n\tHeight: " + std::to_string(_heightRatio));
     if (_verbosity > VERBOSITY_LOG) Debug::out("Setting render scale...");
-    //SDL_RenderSetScale(_renderer, _widthRatio, _heightRatio);
+
+    // Initialize the render module
+    Renderer::Initialize(_window, _widthRatio, _heightRatio, _verbosity);
 
     return true;
 }
@@ -183,9 +177,11 @@ int Application::Run() {
         }
 
         // Render method
-        /*renderStart();
-        render();
-        renderEnd();*/
+        _renderer.StartRender();
+        /*
+            Run batched draw calls
+        */
+        _renderer.EndRender();
 
         // FPS cap
         unsigned frameTicks = _timer.getTicks();
@@ -273,10 +269,7 @@ void Application::refreshWindow() {
 /*-----------------------------------------------------------------*/
 void Application::exit() {
     if (_verbosity >= VERBOSITY_LOG) Debug::out("Cleaning up renderer...");
-    /*if (_renderer != NULL) {
-        SDL_DestroyRenderer(_renderer);
-        _renderer = NULL;
-    }*/
+    Renderer::Exit();
 
     if (_verbosity >= VERBOSITY_LOG) Debug::out("Cleaning up window...");
     if (_window != NULL) {
