@@ -42,6 +42,8 @@ class Renderer {
 
         /**
             \brief Begins a render pass
+
+            Clears the screen with a solid grey and refreshes the buffer for another pass.
         */
         static void StartRender();
 
@@ -49,7 +51,7 @@ class Renderer {
             \brief Renders the given batch. May be run multiple times during a pass.
             \param batch The batch of nodes to render.
         */
-        static void Render(Batcher* batch);
+        static void Render(Batcher& batch);
 
         /**
             \brief Displays the render buffer to the screen.
@@ -60,6 +62,7 @@ class Renderer {
             \brief Disables and frees the memory from the module.
         */
         static void Exit();
+
     private:
         static SDL_Renderer* _renderer;
 };

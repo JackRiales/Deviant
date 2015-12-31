@@ -23,9 +23,7 @@
 #ifndef DVNT_BATCHER_HPP
 #define DVNT_BATCHER_HPP
 
-// Forward declaration
-class IRenderNode;
-
+#include "Deviant/Rendering/IRenderNode.hpp"
 #include <vector>
 
 namespace dv {
@@ -36,9 +34,23 @@ namespace dv {
 */
 class Batcher {
     public:
+        /**
+            \brief Deallocates the render node pointers.
+            \todo Convert to smart pointers, for safety.
+        */
         ~Batcher();
+
+        /**
+            \brief Mounts a render node onto the batch.
+            \todo Automatically sort nodes by some index.
+        */
         void mount(IRenderNode& node);
-        void render();
+
+        /**
+            \brief Draws the batch onto the buffer.
+            \todo Order draw calls by some ordered index in the nodes.
+        */
+        void draw();
     private:
         std::vector<IRenderNode*> _batch;
 };

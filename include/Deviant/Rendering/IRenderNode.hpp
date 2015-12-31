@@ -20,13 +20,10 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-#ifndef DVNT_BATCHER_HPP
-#define DVNT_BATCHER_HPP
+#ifndef DVNT_RENDER_NODE_HPP
+#define DVNT_RENDER_NODE_HPP
 
 namespace dv {
-
-// Forward declaration
-class Batcher;
 
 /**
     \interface
@@ -34,7 +31,25 @@ class Batcher;
 */
 class IRenderNode {
     public:
-        virtual void draw(Batcher& batch) = 0;
+        /**
+            \brief Destructor.
+
+            Called during deallocation in the Batcher it's attached to.
+            Subclasses of IRenderNode must define a destructor to have
+            consistent behavior during the garbage collection process.
+         */
+        virtual ~IRenderNode() { ; }
+
+        /**
+            \brief Used to draw something onto the draw buffer.
+
+            Subclasses of IRenderNode will define their own draw methods
+            to be called during a batched render.
+
+            \example A sprite would use a texture, texture region, and a transform
+            to draw a part of a loaded image in at the correct position.
+        */
+        virtual void draw() = 0;
 };
 
 }

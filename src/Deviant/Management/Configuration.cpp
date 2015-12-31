@@ -20,47 +20,40 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "Deviant/Rendering/Renderer.hpp"
+#include "Deviant/Management/Configuration.hpp"
 using namespace dv;
 
 /*-----------------------------------------------------------------*/
 /* Static Declarations --------------------------------------------*/
 /*-----------------------------------------------------------------*/
-SDL_Renderer* Renderer::_renderer = NULL;
+std::map<std::string, ConfigMap> ConfigManager::_configTable;
+std::string ConfigManager::_activeSet = "Default";
 
 /*-----------------------------------------------------------------*/
-bool Renderer::Initialize(SDL_Window* window, unsigned widthRatio, unsigned heightRatio, int verbosity) {
-    if (verbosity >= VERBOSITY_LOG) Debug::out("Initializing Renderer...");
-    _renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (_renderer == NULL) {
-        std::string errString = "Application::Initialize failed to generate the renderer.";
-        if (verbosity >= VERBOSITY_LIMITED) Debug::err(errString, SDL_GetError());
-        return false;
+void ConfigManager::AddConfig(const std::string& setName, const std::string& key, const std::string& value) {
+    // Search if the set name is already in place
+    if (_configTable.find(setName) == _configTable.end()) {
+        // Not found, create a new one
+        ConfigMap newMap;
+        newMap.insert(std::pair<std::string, std::string>(key, value));
+        _configTable.insert(std::pair<std::string, ConfigMap>(setName, newMap));
+    } else {
+        // Found, add it to that set's config map
+        _configTable[setName].insert(std::pair<std::string, std::string>(key, value));
     }
-    SDL_RenderSetScale(_renderer, widthRatio, heightRatio);
-    return true;
 }
 
 /*-----------------------------------------------------------------*/
-void Renderer::StartRender() {
-    SDL_SetRenderDrawColor(_renderer, 0x45, 0x45, 0x45, 0xFF);
-    SDL_RenderClear(_renderer);
+void ConfigManager::AddConfig(const std::string& key, const std::string& value) {
+    AddConfig(_activeSet, key, value);
 }
 
 /*-----------------------------------------------------------------*/
-void Renderer::Render(Batcher& batch) {
-    batch.draw();
+bool ConfigManager::Read(std::string fileName) {
+    return 0;
 }
 
 /*-----------------------------------------------------------------*/
-void Renderer::EndRender() {
-    SDL_RenderPresent(_renderer);
-}
-
-/*-----------------------------------------------------------------*/
-void Renderer::Exit() {
-    if (_renderer != NULL) {
-        SDL_DestroyRenderer(_renderer);
-        _renderer = NULL;
-    }
+bool ConfigManager::WriteAll(std::string fileName) {
+    return 0;
 }
