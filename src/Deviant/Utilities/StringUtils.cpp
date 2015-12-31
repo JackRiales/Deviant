@@ -66,3 +66,12 @@ bool StringUtils::StringToBoolean(const std::string& text) {
         return false;
     }
 }
+
+/*-----------------------------------------------------------------*/
+std::string StringUtils::ReplaceCharacter(std::string src, char repl, char ch) {
+    for (unsigned i = 0; i < src.length(); ++i) {
+        if (src[i] == repl)
+            src[i] = ch;
+    }
+    return src;
+}

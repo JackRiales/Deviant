@@ -7,3 +7,4 @@ doxygen/
 *.depend
 *.cbp
 *.dll
+*.conf

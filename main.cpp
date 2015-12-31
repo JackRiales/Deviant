@@ -3,6 +3,7 @@
 
 #include "Deviant/Runtime/Application.hpp"
 #include "Deviant/Utilities/Transform.hpp"
+#include "Deviant/Management/Configuration.hpp"
 #include "Deviant/Utilities/Debug.hpp"
 #include <iostream>
 using namespace dv;
@@ -14,7 +15,7 @@ int main(int argc, char* args[]) {
 		Debug::out(e);
 	}
 
-	std::cout << "TESTING TRANSFORMS\n===============" << std::endl;
+	/*std::cout << "TESTING TRANSFORMS\n===============" << std::endl;
 	Transform2D t1;
 	Transform2D t2;
 	t2.setParent(t1);
@@ -25,7 +26,20 @@ int main(int argc, char* args[]) {
 	std::cout << "T2\n\tPosition = " << std::to_string(t2.position().x) << ", " << std::to_string(t2.position().y) << std::endl;
 	t2.removeParent();
 	t1.removeParent();
-	std::cout << "===============\nENDING TEST OF TRANSFORMS" << std::endl;
+	std::cout << "===============\nENDING TEST OF TRANSFORMS" << std::endl;*/
+
+	std::cout << "TESTING CONFIG\n===============" << std::endl;
+	/* WRITING
+	ConfigManager::AddConfig("MySet", "MyKey1", "MyValue1");
+	ConfigManager::AddConfig("MySet", "MyKey2", "MyValue2");
+	ConfigManager::AddConfig("MySet", "MyKey3", "MyValue3");
+	ConfigManager::AddConfig("MyKey4", "MyValue4");
+	ConfigManager::WriteAll("TestConfig");*/
+
+	/* READING */
+	ConfigManager::Read("TestConfig");
+	ConfigManager::WriteAll("TestConfig2");
+	std::cout << "===============\nENDING TEST OF CONFIG" << std::endl;
 
 
 	return Application::Run();

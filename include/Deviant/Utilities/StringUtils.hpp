@@ -34,6 +34,7 @@ public:
     static std::string BooleanToString(bool b);
     static int StringToInt(const std::string& text);
     static bool StringToBoolean(const std::string& text);
+    static std::string ReplaceCharacter(std::string src, char repl, char ch);
 };
 
 }
