@@ -66,6 +66,32 @@ class ConfigManager {
                               const std::string& value);
 
         /**
+            \brief Add a config variable with an int rather than a string.
+        */
+        static void AddIntConfig(const std::string& setName,
+                                 const std::string& key,
+                                 int value);
+
+        /**
+            \brief Add a config variable with an int rather than a string.
+        */
+        static void AddIntConfig(const std::string& key,
+                                 int value);
+
+        /**
+            \brief Add a config variable with a boolean rather than a string.
+        */
+        static void AddBooleanConfig(const std::string& setName,
+                                     const std::string& key,
+                                     bool value);
+
+        /**
+            \brief Add a config variable with a boolean rather than a string.
+        */
+        static void AddBooleanConfig(const std::string& key,
+                                     bool value);
+
+        /**
             \return A vector array of configs from the given set.
             \throw Exception if no set by the given name is found.
         */
@@ -81,6 +107,12 @@ class ConfigManager {
             \return 0 if unable to convert.
         */
         static int GetIntConfig(const std::string& setName, const std::string& key);
+
+        /**
+            \return the config in the given set defined by the given key, converted to an int if possible.
+            \return False if unable to convert.
+        */
+        static bool GetBoolConfig(const std::string& setName, const std::string& key);
 
         /**
             \brief Read settings from a previously written config file.

@@ -52,6 +52,26 @@ void ConfigManager::AddConfig(const std::string& key, const std::string& value) 
 }
 
 /*-----------------------------------------------------------------*/
+void ConfigManager::AddIntConfig(const std::string& setName, const std::string& key, int value) {
+    AddConfig(setName, key, StringUtils::IntToString(value));
+}
+
+/*-----------------------------------------------------------------*/
+void ConfigManager::AddIntConfig(const std::string& key, int value) {
+    AddConfig(key, StringUtils::IntToString(value));
+}
+
+/*-----------------------------------------------------------------*/
+void ConfigManager::AddBooleanConfig(const std::string& setName, const std::string& key, bool value) {
+    AddConfig(setName, key, StringUtils::BooleanToString(value));
+}
+
+/*-----------------------------------------------------------------*/
+void ConfigManager::AddBooleanConfig(const std::string& key, bool value) {
+    AddConfig(key, StringUtils::BooleanToString(value));
+}
+
+/*-----------------------------------------------------------------*/
 std::vector<ConfigManager::Config> ConfigManager::GetConfigSet(const std::string& setName) {
     ConfigMap* cSet = 0;
 
@@ -93,9 +113,13 @@ std::string ConfigManager::GetConfig(const std::string& setName, const std::stri
 }
 
 /*-----------------------------------------------------------------*/
-
 int ConfigManager::GetIntConfig(const std::string& setName, const std::string& key) {
     return StringUtils::StringToInt(GetConfig(setName, key));
+}
+
+/*-----------------------------------------------------------------*/
+bool ConfigManager::GetBoolConfig(const std::string& setName, const std::string& key) {
+    return StringUtils::StringToBoolean(GetConfig(setName, key));
 }
 
 /*-----------------------------------------------------------------*/
