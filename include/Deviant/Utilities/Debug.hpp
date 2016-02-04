@@ -100,7 +100,7 @@ class Exception {
         /**
             \brief Constructor.
         */
-        Exception(std::string message, LogLevel level = LogLevel::LOG, std::string location = "");
+        Exception(std::string message, LogLevel log = LogLevel::LOG, std::string location = "");
 
         /**
             \brief Outputs formatted message to console.
