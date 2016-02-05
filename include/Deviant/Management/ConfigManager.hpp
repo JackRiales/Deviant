@@ -140,7 +140,7 @@ class ConfigManager {
 
     private:
         /**
-            A map container of config maps that will define a config table.
+            \brief A map container of config maps that will define a config table.
 
             Each map will have a name (string) that will contain a series of
             configuration variables, all grouped together.
@@ -148,7 +148,9 @@ class ConfigManager {
         static std::map<std::string, ConfigMap> _configTable;
 
         /**
-            The current default config set. Without specifying which set to add or read
+            \brief The current default config set.
+
+            Without specifying which set to add or read
             from, or write to, the default will be whatever the active is.
         */
         static std::string _defaultSet;

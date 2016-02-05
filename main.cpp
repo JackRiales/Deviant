@@ -1,10 +1,12 @@
 // Remove later
 #define TEST_TRANSFORMS 0
 #define TEST_CONFIG 0
+#define TEST_COLOR 1
 
 #include "Deviant/Runtime/Application.hpp"
 #include "Deviant/Utilities/Transform.hpp"
-#include "Deviant/Management/Configuration.hpp"
+#include "Deviant/Management/ConfigManager.hpp"
+#include "Deviant/Graphics/Color.hpp"
 #include "Deviant/Utilities/Debug.hpp"
 #include <iostream>
 using namespace dv;
@@ -45,6 +47,17 @@ int main(int argc, char* args[]) {
         ConfigManager::Read("TestConfig");
         ConfigManager::WriteAll("TestConfig2");
         std::cout << "===============\nENDING TEST OF CONFIG\n" << std::endl;
+    }
+
+    if (TEST_COLOR) {
+        std::cout << "TESTING COLOR\n===============" << std::endl;
+        Color start = Color::white;
+        Color end = Color::black;
+        int steps = 20;
+        std::list<Color> gradient = Color::GetRange(start, end, steps);
+        for (std::list<Color>::const_iterator it = gradient.begin(); it != gradient.end(); ++it)
+            Debug::out("Color step--\n" + (*it).toString());
+        std::cout << "===============\nENDING TEST OF COLOR\n" << std::endl;
     }
 
 	return Application::Run();

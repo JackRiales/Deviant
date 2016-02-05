@@ -3,8 +3,10 @@ lib/
 bin/
 doc/
 doxygen/
+Multi/
 *.layout
 *.depend
 *.cbp
 *.dll
 *.conf
+lib_finder.script

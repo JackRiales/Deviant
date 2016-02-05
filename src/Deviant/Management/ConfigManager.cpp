@@ -20,7 +20,7 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "Deviant/Management/Configuration.hpp"
+#include "Deviant/Management/ConfigManager.hpp"
 #include "Deviant/Utilities/StringUtils.hpp"
 #include "Deviant/Utilities/Debug.hpp"
 using namespace dv;
