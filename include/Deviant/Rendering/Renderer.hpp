@@ -66,6 +66,7 @@ class Renderer {
         */
         static void Exit();
 
+        // Textures need the SDL renderer
         friend class Texture;
     private:
         static SDL_Renderer* _renderer;

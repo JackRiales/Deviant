@@ -30,9 +30,24 @@ namespace dv {
 
 class Texture {
     public:
+        /**
+            \brief Constructor.
+        */
         Texture();
+
+        /**
+            \brief Constructor. Immediately calls file load.
+        */
         Texture(const std::string& path, Color *key = NULL);
+
+        /**
+            \brief Copy constructor.
+        */
         Texture(const Texture& cpy);
+
+        /**
+            \brief Destructor. Calls `free()`
+        */
         ~Texture();
 
         /**
@@ -43,14 +58,28 @@ class Texture {
         */
         bool loadFromFile(const std::string& path, Color *key = NULL);
 
+        /**
+            \brief Manually sets the size of the texture.
+        */
         void setSize(unsigned width, unsigned height);
+
+        /**
+            \brief Sets the color modification of the texture.
+        */
         void setColor (uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+
+        /**
+            \brief Sets the color modification of the texture.
+        */
         void setColor(Color *c);
 
         const unsigned& width();
         const unsigned& height();
 
     protected:
+        /**
+            \brief Frees sdl texture.
+        */
         void free();
 
     private:
