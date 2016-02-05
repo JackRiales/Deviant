@@ -10,3 +10,4 @@ Multi/
 *.dll
 *.conf
 lib_finder.script
+gmon.out
