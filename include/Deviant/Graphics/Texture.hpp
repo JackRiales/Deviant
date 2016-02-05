@@ -31,17 +31,24 @@ namespace dv {
 class Texture {
     public:
         Texture();
-        Texture(const std::string& path);
+        Texture(const std::string& path, Color *key = NULL);
         Texture(const Texture& cpy);
         ~Texture();
 
-        bool loadFromFile(const std::string& path);
+        /**
+            \brief Loads in a texture from an image file.
+            \param path The file path to the image.
+            \param key The alpha color key
+            \return true if image was able to be loaded. False if not.
+        */
+        bool loadFromFile(const std::string& path, Color *key = NULL);
 
         void setSize(unsigned width, unsigned height);
+        void setColor (uint8_t r, uint8_t g, uint8_t b, uint8_t a);
         void setColor(Color *c);
 
-        unsigned width();
-        unsigned height();
+        const unsigned& width();
+        const unsigned& height();
 
     protected:
         void free();

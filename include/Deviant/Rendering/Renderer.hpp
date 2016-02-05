@@ -29,6 +29,9 @@
 
 namespace dv {
 
+// Forward declaration of friend classes
+class Texture;
+
 /**
     \class
     \brief Defines the deviant render engine to be used in runtime.
@@ -63,6 +66,7 @@ class Renderer {
         */
         static void Exit();
 
+        friend class Texture;
     private:
         static SDL_Renderer* _renderer;
 };
