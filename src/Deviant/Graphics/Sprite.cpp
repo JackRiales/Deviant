@@ -20,51 +20,22 @@
     3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "Deviant/Utilities/Math/Rect.hpp"
-#include "Deviant/Utilities/Debug.hpp"
+#include "Deviant/Graphics/Sprite.hpp"
 using namespace dv;
 
 /*-----------------------------------------------------------------*/
-template<typename T>
-Rect<T>::Rect(T _x, T _y, T _w, T _h) :
-x(_x),
-y(_y),
-w(_w),
-h(_h) {
-
+Sprite::Sprite():
+_texture (NULL) {
+    ;
 }
 
 /*-----------------------------------------------------------------*/
-template<typename T>
-Rect<T>::Rect(const Rect& cpy) :
-x(cpy.x),
-y(cpy.y),
-w(cpy.w),
-h(cpy.h) {
-
+Sprite::Sprite(Texture* sheet, UIntRect *rect) {
+    createFromTexture(sheet, rect);
 }
 
 /*-----------------------------------------------------------------*/
-template<typename T>
-bool Rect<T>::intersect(Rect r) {
-    bool touchingRight = (x + w > r.x - r.w);
-    bool touchingLeft = (x - w < r.x + r.w);
-    bool touchingDown = (y + h > r.y - r.h);
-    bool touchingUp = (y - h < r.y + r.h);
-    return (touchingRight && touchingLeft && touchingDown && touchingUp);
+void Sprite::createFromTexture(Texture* sheet, UIntRect *rect) {
+    _texture = sheet;
+    _rect = *rect;
 }
-
-/*-----------------------------------------------------------------*/
-template<typename T>
-template<typename V>
-bool Rect<T>::contains(Vector2D<V> v) {
-    bool inVertical = (x < v.x) && (w > v.x);
-    bool inHorizontal = (y > v.y) && (h < v.y);
-    return inVertical && inHorizontal;
-}
-
-/*-----------------------------------------------------------------*/
-template class Rect<int>;
-template class Rect<unsigned>;
-template class Rect<float>;
-template class Rect<double>;

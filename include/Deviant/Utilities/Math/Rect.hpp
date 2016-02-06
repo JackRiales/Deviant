@@ -64,11 +64,10 @@ struct Rect {
 
 // Shorthand type definitions
 typedef Rect<int> IntRect;
+typedef Rect<unsigned> UIntRect;
 typedef Rect<float> FloatRect;
+typedef Rect<double> DoubleRect;
 
 }
 
 #endif // DVNT_RECT_HPP
-
-// EOF Rect.hpp
-// Location at: /include/Deviant/Math/Rect.hpp

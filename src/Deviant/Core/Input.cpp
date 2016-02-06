@@ -45,6 +45,3 @@ Vector2D<int> Input::MousePosition() {
 void Input::handleInputEvents(SDL_Event *e) {
     ;
 }
-
-// EOF Input.cpp
-// Location at: /src/Deviant/Base/Input.cpp
